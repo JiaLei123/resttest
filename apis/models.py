@@ -1,11 +1,12 @@
 from django.db import models
 from django.conf import settings
+from django.db.models import CASCADE
 from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
-class Spring(models):
+class Spring(models.Model):
     name = models.CharField(max_length=100, blank=True, default="")
-    description = models.CharField(blank=True, default="")
+    description = models.CharField(max_length=200, blank=True, default="")
     end = models.DateField(unique=True)
 
     def __str__(self):
@@ -25,8 +26,8 @@ class Task(models.Model):
     )
 
     name = models.CharField(max_length=100)
-    description = models.CharField(blank=True, default="")
-    spring = models.ForeignKey(Spring, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, default="")
+    spring = models.ForeignKey(Spring, blank=True, null=True, on_delete=CASCADE)
     status = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_TODO)
     order = models.SmallIntegerField(default=0)
     # assign = models.ForeignKey(settings.)
